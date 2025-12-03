@@ -8,17 +8,12 @@
 	b) Structure:
 		- File Name (string)
 		- Inode Index (int) 
-
-#### 2. File List Item:
-	a) Purpose: Creates a linked list of File Entries, this connects all files in a single folder
-	b) Structure:
-		- File Entry (described above)
 		- Next File List Item (forms single linked list)
 
-#### 3. Folder:
+#### 2. Folder:
 	a) Purpose: Folder that contains linked list of File Entries
 	b) Structure:
-		- File List Item (head of linked list defined above)i
+		- File List Item (head of linked list defined above)
 
 ### Inode Table Structure
 #### 1.	Inode Table Entry:
@@ -47,13 +42,10 @@
 ### 1. Inode Table Model:
 	a) Purpose: Manages maintaining Inode table.
 	b) Actions:
-		- Add Data File: Creates a new Inode Table Entry of type file. Called by folder model create file. Overwrite deleted entries before writing to end of array.
-			> Input: Data Pointer (void*), Data Size (size_t)
+		- Add File: Creates a new Inode Table Entry of type file. Called by folder model create file. Overwrite deleted entries before writing to end of array.
+			> Input: Data Pointer (void*), Data Size (size_t), Data Type (Folder or Data)
 			> Output: ID of Inode Entry (index in inode table)
-		- Add Folder: Creates a new Inode Table Entry for a type folder. Called by folder model create folder. Overwrite deleted entries before writing to end of array.
-			> Input: None
-			> Output: ID of Inode Entry (index in inode table)
-		- Delete File: Deletes any file (could be data file or folder). Sets Inode Table Entry to be invalid. Add deleted index to deleted entry stack. Free memory of file.
+    	- Delete File: Deletes any file (could be data file or folder). Sets Inode Table Entry to be invalid. Add deleted index to deleted entry stack. Free memory of file.
 			> Input: ID of file
 			> Output: None
 		- Get File: Retries data location from file
