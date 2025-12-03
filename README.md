@@ -18,7 +18,7 @@
 #### 3. Folder:
 	a) Purpose: Folder that contains linked list of File Entries
 	b) Structure:
-		- File List Item (head of linked list defined above)
+		- File List Item (head of linked list defined above)i
 
 ### Inode Table Structure
 #### 1.	Inode Table Entry:
