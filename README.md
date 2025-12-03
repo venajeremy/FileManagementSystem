@@ -48,7 +48,7 @@
     	- Delete File: Deletes any file (could be data file or folder). Sets Inode Table Entry to be invalid. Add deleted index to deleted entry stack. Free memory of file.
 			> Input: ID of file
 			> Output: None
-		- Get File: Retries data location from file
+		- Get Data: Retries data location from file
 			> Input: ID of file
 			> Output: Memory address of file
 		- Get Size: Retries size of file
@@ -57,6 +57,9 @@
 		- Get File Type: Returns the file type of the file
 			> Input: ID of file
 			> Output: Type Enum of file
+        - Update File: Updates existing inode entry
+            > Input: ID of file
+            > Output: True or False if file was updated successfully
 
 ### 2. Folder Model:
 	a) Purpose: Access file, Create file, Delete file. Abstracted control interface used by controller.
@@ -67,7 +70,7 @@
 		- Create file: Adds file to entry to folder
 			> Input: Source folder (folder memory address), file name, file inode id
 			> Output: Successfully created file (bool)
-		- Delete file: Removes file with specified name. If the file is a folder call get file (inode model method), then call delete file (folder model method) recursively on each file inside. If data file, call inode table delete file, then remove from linked list.
+		- Delete file: Removes file with specified name. If the file is a folder call get data (inode model method), then call delete file (folder model method) recursively on each file inside. If data file, call inode table delete file, then remove from linked list.
 			> Input: Source folder (folder memory address), file name
 			> Output: Successfully remove file (bool)
 

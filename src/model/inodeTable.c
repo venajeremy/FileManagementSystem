@@ -92,7 +92,56 @@ int deleteFile(int index){
 	deletedEntry* newDeleted = (deletedEntry *)malloc(sizeof(deletedEntry));
 	newDeleted->index = index;
 	newDeleted->next = table.entryDeletedStack->next;
-	table.entryDeltedStack = deletedEntry
+	table.entryDeletedStack = newDeleted;
 }
 
+void* getData(int index){
+	// Check index within bounds
+	if(index >= MAXSIZE || index < 0){
+		return NULL;
+	}
 
+	inodeEntry* retrievedFile = &table.entryArray[index];
+
+	// Check if already deleted
+	if(toDelete->valid != 1){
+		return NULL;
+	}
+
+	return retrievedFile->dataPointer;
+
+}
+
+int getSize(int index){
+	// Check index within bounds
+	if(index >= MAXSIZE || index < 0){
+		return -1;
+	}
+
+	inodeEntry* retrievedFile = &table.entryArray[index];
+
+	// Check if already deleted
+	if(toDelete->valid != 1){
+		return -1;
+	}
+
+	return retrievedFile->fileSize;
+
+}
+
+FileType getType(int index){
+	// Check index within bounds
+	if(index >= MAXSIZE || index < 0){
+		return -1;
+	}
+
+	inodeEntry* retrievedFile = &table.entryArray[index];
+
+	// Check if already deleted
+	if(toDelete->valid != 1){
+		return -1;
+	}
+
+	return retrievedFile->fileType;
+
+}
