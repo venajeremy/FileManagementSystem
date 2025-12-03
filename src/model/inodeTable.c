@@ -104,7 +104,7 @@ void* getData(int index){
 	inodeEntry* retrievedFile = &table.entryArray[index];
 
 	// Check if already deleted
-	if(toDelete->valid != 1){
+	if(retrievedFile->valid != 1){
 		return NULL;
 	}
 
@@ -121,7 +121,7 @@ int getSize(int index){
 	inodeEntry* retrievedFile = &table.entryArray[index];
 
 	// Check if already deleted
-	if(toDelete->valid != 1){
+	if(retrievedFile->valid != 1){
 		return -1;
 	}
 
@@ -129,7 +129,7 @@ int getSize(int index){
 
 }
 
-FileType getType(int index){
+fileType getType(int index){
 	// Check index within bounds
 	if(index >= MAXSIZE || index < 0){
 		return -1;
@@ -138,10 +138,12 @@ FileType getType(int index){
 	inodeEntry* retrievedFile = &table.entryArray[index];
 
 	// Check if already deleted
-	if(toDelete->valid != 1){
+	if(retrievedFile->valid != 1){
 		return -1;
 	}
 
-	return retrievedFile->fileType;
+	return retrievedFile->type;
 
 }
+
+
