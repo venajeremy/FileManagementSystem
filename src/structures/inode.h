@@ -15,8 +15,8 @@ typedef struct {
 } inodeEntry;
 
 typedef struct deletedEntry {
-	int iD;
-	deletedEntry* nextDeletedEntry;
+	int index;
+	deletedEntry* next;
 } deletedEntry;
 
 typedef struct {
