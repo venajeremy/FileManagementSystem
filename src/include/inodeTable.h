@@ -10,4 +10,6 @@ void destTable();
 
 int addFile(void* dataPtr, int dataSize, fileType dataType);
 
+int deleteFile(int index);
+
 #endif

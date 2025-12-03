@@ -69,3 +69,30 @@ int addFile(void* dataPtr, int dataSize, fileType dataType){
 	return index;
 
 }
+
+int deleteFile(int index){
+	
+	// Check index within bounds
+	if(index >= MAXSIZE || index < 0){
+		return 0;
+	}
+
+	inodeEntry* toDelete = &table.entryArray[index];
+
+	// Check if already deleted
+	if(toDelete->valid != 1){
+		return 0;
+	}
+
+	// Make this entry invalid
+	toDelete->valid = 0;
+
+	// Add this entry to the invalid entry stack in the table
+	// This will be freed when popped or table destroyed
+	deletedEntry* newDeleted = (deletedEntry *)malloc(sizeof(deletedEntry));
+	newDeleted->index = index;
+	newDeleted->next = table.entryDeletedStack->next;
+	table.entryDeltedStack = deletedEntry
+}
+
+
