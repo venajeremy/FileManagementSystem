@@ -3,25 +3,25 @@
 ## Structures
 ### Folder Structure
 
-1. File Entry:
+#### 1. File Entry:
 	a) Purpose: Used inside folder to reference entries in the primary file table (inode Table)
 	b) Structure:
 		- File Name (string)
 		- Inode Index (int) 
 
-2. File List Item:
+#### 2. File List Item:
 	a) Purpose: Creates a linked list of File Entries, this connects all files in a single folder
 	b) Structure:
 		- File Entry (described above)
 		- Next File List Item (forms single linked list)
 
-3. Folder:
+#### 3. Folder:
 	a) Purpose: Folder that contains linked list of File Entries
 	b) Structure:
 		- File List Item (head of linked list defined above)
 
 ### Inode Table Structure
-1.	Inode Table Entry:
+#### 1.	Inode Table Entry:
 	a) Purpose: Stores the details for a specific file on the system
 	b) Important Detail: Inode Table uses index of entries as ID. Each entry in the table does not know its ID.
 	c) Structure: 
@@ -30,13 +30,13 @@
 		- Data Pointer (Void Ptr: will be casted depending on the type)
 		- File Size (size_t)
 
-2. Deleted Entry:
+#### 2. Deleted Entry:
 	a) Purpose: Listed List of entries that have been deleted. Prioritizing writing over these instead of writing to the end of the array i node table array.
 	b) Structure:
 		- ID (Int)
 		- Next Deleted Entry (Deleted Entry Pointer)
 
-3. Inode Table:
+#### 3. Inode Table:
 	a) Purpose: Contains array of Inode Table Entries
 	b) Structure:
 		- Array of InodeTable Entries
