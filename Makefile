@@ -2,11 +2,20 @@ CC = gcc
 CFLAGS = 
 TARGET = fileManager
 
-SRCS = src/structures \
-	   src/model \
-	   src/view \
-	   src/
+SRCS = $(wildcard src/structures/*.c \
+	   src/model/*.c \
+	   src/view/*.c \
+	   src/controller/*.c)
 
-start:
-	echo "Compiling..."
-	gcc src/structures
+OBJ = $(SRCS:.c=.o)
+
+OUT = bin/
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: $(OUT)$(TARGET)
+
+$(OUT)$(TARGET): $(OBJ)
+	$(CC) $^ -o $@
+
