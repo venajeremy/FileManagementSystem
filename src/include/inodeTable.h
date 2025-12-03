@@ -2,10 +2,12 @@
 
 #define INODETABLE_H
 
+#include "inode.h"
+
 void initTable();
 
 void destTable();
 
-int addFile(void* dataPtr, size_t dataSize, fileType dataType);
+int addFile(void* dataPtr, int dataSize, fileType dataType);
 
 #endif

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "inode.h"
+#include "inodeTable.h"
 
 inodeTable table;
 
@@ -20,7 +20,7 @@ void destTable(){
 	deletedEntry* last;
 	while(table.entryDeletedStack != NULL){
 		last = table.entryDeletedStack;
-		table.entryDeletedStack = table.entryDeletedStack.next;
+		table.entryDeletedStack = table.entryDeletedStack->next;
 		free(last);
 	}
 	free(table.entryArray);
@@ -33,21 +33,21 @@ deletedEntry* popDeleted(){
 		return NULL;
 	}
 	deletedEntry* top = table.entryDeletedStack;
-	table.entryDeletedStack = table.entryDeletedStack.next;
+	table.entryDeletedStack = table.entryDeletedStack->next;
 	return top;
 }
 
 // Public Methods
 
-int addFile(void* dataPtr, size_t dataSize, fileType dataType){
+int addFile(void* dataPtr, int dataSize, fileType dataType){
 
 	// Find position in entryArray to write new file
 	int index;
 	deletedEntry* nextDeleted = popDeleted();
 	// If we have a deleted entry overwrite this first
 	if(nextDeleted != NULL){
-		index = deletedEntry.index;
-		free(deletedEntry);
+		index = nextDeleted->index;
+		free(nextDeleted);
 	}
 	else
 	{
@@ -61,7 +61,7 @@ int addFile(void* dataPtr, size_t dataSize, fileType dataType){
 
 	// Add new inode table entry
 	inodeEntry* newEntry = &table.entryArray[index];
-	newEntry->valid = true;
+	newEntry->valid = 1;
 	newEntry->type = dataType;
 	newEntry->dataPointer = dataPtr;
 	newEntry->fileSize = dataSize;

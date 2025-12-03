@@ -8,15 +8,15 @@ typedef enum {
 } fileType;
 
 typedef struct {
-	bool valid;
+	char valid;
 	fileType type;
 	void* dataPointer;
-	size_t fileSize;
+	int fileSize;
 } inodeEntry;
 
 typedef struct deletedEntry {
 	int index;
-	deletedEntry* next;
+	struct deletedEntry* next;
 } deletedEntry;
 
 typedef struct {

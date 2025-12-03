@@ -1,6 +1,8 @@
 CC = gcc
-CFLAGS = 
+CFLAGS =
 TARGET = fileManager
+
+INCL = src/include/
 
 SRCS = $(wildcard src/structures/*.c \
 	   src/model/*.c \
@@ -12,10 +14,12 @@ OBJ = $(SRCS:.c=.o)
 OUT = bin/
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INCL) -c $< -o $@
 
-all: $(OUT)$(TARGET)
+build: $(OUT)$(TARGET)
 
 $(OUT)$(TARGET): $(OBJ)
 	$(CC) $^ -o $@
 
+run:
+	bin/$(TARGET)
