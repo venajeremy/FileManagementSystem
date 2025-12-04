@@ -31,8 +31,7 @@ void destTable(){
 	// Free all data stored in entryArray
 	for(int i = 0 ; i < size ; i++){
 		if(table.entryArray[i].valid>0){
-			printf("Freeing %d, pointer: %d\n",i,table.entryArray[i].dataPointer);
-			free(table.entryArray[i].dataPointer);
+		    free(table.entryArray[i].dataPointer);
 		}
 	}
 	// Free entryArray

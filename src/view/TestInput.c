@@ -10,12 +10,10 @@ int main(){
 
 
 	char* str = "Hello fild system!\n";
-	char* heapData = (char*)malloc(sizeof(str)+1);
+	char* heapData = (char*)malloc(sizeof(char)*strlen(str)+1);
 	strcpy(heapData, str);
 
-	printf("Created Addr: %d\n",(void*)heapData);
-
-	int testStringIndex = addFile(&heapData, sizeof(heapData), DATA);
+	int testStringIndex = addFile(heapData, sizeof(heapData), DATA);
 
 	printf("The inode index of new file is: %d\n", testStringIndex);
 
