@@ -12,4 +12,12 @@ int addFile(void* dataPtr, int dataSize, fileType dataType);
 
 int deleteFile(int index);
 
+void* getData(int index);
+
+int getSize(int index);
+
+fileType getType(int index);
+
+int updateFile(int index, void* dataPtr, int dataSize, fileType dataType);
+
 #endif
