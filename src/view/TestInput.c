@@ -9,11 +9,11 @@ int main(){
 	initTable();
 
 
-	char* str = "Hello fild system!\n";
+	char* str = "Hello file system!\n";
 	char* heapData = (char*)malloc(sizeof(char)*strlen(str)+1);
 	strcpy(heapData, str);
 
-    	char* str1 = "I am a different string of a different size!!!!!\n";
+    char* str1 = "I am a different string of a different size!!!!!\n";
 	char* heapData1 = (char*)malloc(sizeof(char)*strlen(str1)+1);
 	strcpy(heapData1, str1);
 
@@ -21,10 +21,13 @@ int main(){
 
 	int testStringIndex = addFile(heapData, sizeof(heapData), DATA);
 
-	printf("Saved first string, Reaing saved data: \n %s\n", (char*) getData(testStringIndex));
+	printf("Saved string #%d, Reaing saved data: \n %s\n", testStringIndex, (char*) getData(testStringIndex));
+
+	deleteFile(testStringIndex);
 
 	testStringIndex = addFile(heapData1, sizeof(heapData1), DATA);
-	printf("Saved second string, Reaing saved data: \n %s\n", (char*) getData(testStringIndex));
+	
+	printf("Saved string #%d, Reaing saved data: \n %s\n", testStringIndex, (char*) getData(testStringIndex));
   
 
 	// Destructors

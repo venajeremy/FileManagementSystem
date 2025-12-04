@@ -83,7 +83,7 @@ int addFile(void* dataPtr, int dataSize, fileType dataType){
 }
 
 int deleteFile(int index){
-	
+
 	// Check index within bounds
 	if(index >= MAXSIZE || index < 0){
 		return 0;
@@ -103,8 +103,10 @@ int deleteFile(int index){
 	// This will be freed when popped or table destroyed
 	deletedEntry* newDeleted = (deletedEntry *)malloc(sizeof(deletedEntry));
 	newDeleted->index = index;
-	newDeleted->next = table.entryDeletedStack->next;
+	newDeleted->next = table.entryDeletedStack;
 	table.entryDeletedStack = newDeleted;
+
+	return 1;
 }
 
 void* getData(int index){
