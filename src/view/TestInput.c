@@ -1,15 +1,21 @@
 #include "inodeTable.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main(){
 	// Constructors
 	initTable();
 
 
-	char testString[20] = "Hello file system!\n";
+	char* str = "Hello fild system!\n";
+	char* heapData = (char*)malloc(sizeof(str)+1);
+	strcpy(heapData, str);
 
-	int testStringIndex = addFile(&testString, sizeof(testString), DATA);
+	printf("Created Addr: %d\n",(void*)heapData);
+
+	int testStringIndex = addFile(&heapData, sizeof(heapData), DATA);
 
 	printf("The inode index of new file is: %d\n", testStringIndex);
 

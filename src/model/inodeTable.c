@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "inodeTable.h"
 
@@ -13,16 +14,28 @@ int size = 0;
 
 void initTable(){
 	table.entryArray = (inodeEntry *)malloc(sizeof(inodeEntry)*MAXSIZE);
+	for(int i = 0 ; i < MAXSIZE ; i++){
+		table.entryArray[i].valid = 0;
+	}
 	table.entryDeletedStack = NULL;	
 }
 
 void destTable(){
 	deletedEntry* last;
+	// Free all deleted entry stack
 	while(table.entryDeletedStack != NULL){
 		last = table.entryDeletedStack;
 		table.entryDeletedStack = table.entryDeletedStack->next;
 		free(last);
 	}
+	// Free all data stored in entryArray
+	for(int i = 0 ; i < size ; i++){
+		if(table.entryArray[i].valid>0){
+			printf("Freeing %d, pointer: %d\n",i,table.entryArray[i].dataPointer);
+			free(table.entryArray[i].dataPointer);
+		}
+	}
+	// Free entryArray
 	free(table.entryArray);
 }
 
@@ -146,4 +159,28 @@ fileType getType(int index){
 
 }
 
+int updateFile(int index, void* dataPtr, int dataSize, fileType dataType){
+	// Check index within bounds
+	if(index >= MAXSIZE || index < 0){
+		return -1;
+	}
 
+	inodeEntry* retrievedFile = &table.entryArray[index];
+
+	// Check if already deleted
+	if(retrievedFile->valid != 1){
+		return -1;
+	}
+	
+	// Free previous memory
+	free(retrievedFile->dataPointer);
+
+	// Update
+	retrievedFile->valid = 1;
+	retrievedFile->type = dataType;
+	retrievedFile->dataPointer = dataPtr;
+	retrievedFile->fileSize = dataSize;
+
+	return 1;
+
+}
