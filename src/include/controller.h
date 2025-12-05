@@ -15,6 +15,8 @@ char addDataFile(folder* currentFolder, char* path, char* name, void* data, int 
 
 char addFolderFile(folder* currentFolder, char* path, char* name);
 
+char updateDataFile(folder* currentFolder, char* path, void* data, int size);
+
 folder* getFolder(folder* currentFolder, char* path);
 
 int accessFile(folder* currentFolder, char* path);

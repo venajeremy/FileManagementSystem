@@ -31,6 +31,10 @@ int main(){
 	char* heapData = (char*)malloc(sizeof(char)*strlen(str)+1);
 	strcpy(heapData, str);
 
+	char* str2 = "This is a different message!\n";
+	char* heapData2 = (char*)malloc(sizeof(char)*strlen(str2)+1);
+	strcpy(heapData2, str2);
+
 	if(addDataFile(root, "test/foo", "textfile", heapData, sizeof(heapData))){
 		printf("Successfully created text file\n");
 	} else {
@@ -60,6 +64,12 @@ int main(){
 	deleteFile(root, "test", "foo");
 
 	printFileSystem(root);
+
+	printf("textfile2 before update %s\n", readTextFile(accessFile(root, "words/textfile2")));
+
+	updateDataFile(root, "words/textfile2", heapData2, sizeof(heapData2));
+
+	printf("textfile2 after update %s\n", readTextFile(accessFile(root, "words/textfile2")));	
 
 	// Destructors
 	destFileSystem(&root);

@@ -19,6 +19,10 @@ void destFileSystem(folder** fold){
 
 // Read Inode Helpers
 
+int fileExists(int inodeID){
+	return inodeID >= 0;
+}
+
 folder readFolderFile(int folderID){
 	folder* fold = (folder*) getData(folderID);
 	return *fold;
@@ -211,5 +215,17 @@ char addFolderFile(folder* currentFolder, char* path, char* name){
 	return 1;
 }
 
+// Update Data File
 
+char updateDataFile(folder* currentFolder, char* path, void* data, int size){
+
+	int inodeID = accessFile(currentFolder, path);
+
+	if(fileExists(inodeID)){
+		updateFile(inodeID, data, size, DATA);
+		return 1;
+	}
+	return 0;
+
+}
 
