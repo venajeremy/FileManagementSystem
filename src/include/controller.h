@@ -7,6 +7,8 @@
 #include "folder.h"
 #include "inode.h"
 
+void printFileSystem(folder* currentFolder);
+
 char removeFile(folder* currentFolder, char* path, char* name);
 
 folder readFolderFile(int folderID);

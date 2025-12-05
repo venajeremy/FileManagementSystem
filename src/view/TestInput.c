@@ -18,17 +18,22 @@ int main(){
 		printf("Could not create folder on root\n");
 	}
 
+	addFolderFile(root, "test", "foo");
+	addFolderFile(root, "test/foo", "bar");
+
 	char* str = "Hello file system!\n";
 	char* heapData = (char*)malloc(sizeof(char)*strlen(str)+1);
 	strcpy(heapData, str);
 
-	if(addDataFile(root, "test", "textfile", heapData, sizeof(heapData))){
+	if(addDataFile(root, "test/foo", "textfile", heapData, sizeof(heapData))){
 		printf("Successfully created text file\n");
 	} else {
 		printf("Could not create text file\n");
 	}
 
-	printf("Reading from text file: %s \n", readTextFile(accessFile(root, "test/textfile")));
+	printf("Reading from text file: %s \n", readTextFile(accessFile(root, "test/foo/textfile")));
+
+	printFileSystem(root);
 
 	// Destructors
 	destTable();

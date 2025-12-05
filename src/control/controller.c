@@ -55,6 +55,23 @@ folder* getFolder(folder* currentFolder, char* path){
 
 // Methods
 
+void printFileSystem(folder* currentFolder){
+	fileList* list = currentFolder->fileLinkedList;
+
+	while(list != NULL){
+		printf("%s ", list->file.fileName);
+		if(getType(list->file.inodeIndex)==DIRECTORY){
+			printf("has ---\n");
+			printFileSystem((folder*)getData(list->file.inodeIndex));
+			printf("---\n");
+		} else {
+			printf("\n");
+		}
+		
+		list = list->nextFile;
+	}
+}
+
 char removeFile(folder* currentFolder, char* path, char* name){
 	folder* parentFolder = getFolder(currentFolder, path);
 	if(parentFolder==NULL){
