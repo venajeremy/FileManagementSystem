@@ -4,6 +4,8 @@
 
 #define fileNameSize 255
 
+#define filesys_folder_t folder*
+
 typedef struct {
 	char fileName[fileNameSize];
 	int inodeIndex;

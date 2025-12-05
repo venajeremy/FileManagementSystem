@@ -3,7 +3,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// Helper Methods
+// Folder Controls:
+
+// Read Inode Helpers
+
+folder readFolderFile(int folderID){
+	folder* fold = (folder*) getData(folderID);
+	return *fold;
+}
+
+char* readTextFile(int textfileID){
+	return (char*) getData(textfileID);
+}
+
+// Deletition
 
 char deleteFolderItem(fileList* listItem){
 	// Handles freeing a folder item including its children if it is a folder type
@@ -17,22 +30,45 @@ char deleteFolderItem(fileList* listItem){
 	if(getType(file.inodeIndex)==DIRECTORY){
 		// If directory load the folder object attached
 		folder* fold = (folder*) getData(file.inodeIndex);
-		fileList* innerListItem = fold->fileLinkedList;
-		fileList* next;
-		while(innerListItem != NULL){
-			// Recursively call delete folder item on all contents of the folder
-			next = innerListItem->nextFile;
-			deleteFolderItem(innerListItem);
-			innerListItem = next;
-		}
+		deleteFolder(fold);
 	}
 	// Remove the file attached to the folder item from the inode table
-	deleteFile(file.inodeIndex);
+	deleteInodeEntry(file.inodeIndex);
 	// Free the folder item
 	free(listItem);
 
 	return 1;
 }
+
+char deleteFolder(folder* delFolder){
+	fileList* innerListItem = delFolder->fileLinkedList;
+	fileList* next;
+
+	if(delFolder==NULL){
+		return 0;
+	}
+
+	while(innerListItem != NULL){
+		// Recursively call delete folder item on all contents of the folder
+		next = innerListItem->nextFile;
+		deleteFolderItem(innerListItem);
+		innerListItem = next;
+	}
+
+	return 1;
+}
+
+char deleteFile(folder* currentFolder, char* path, char* name){
+	folder* parentFolder = getFolder(currentFolder, path);
+	if(parentFolder==NULL){
+		return 0;
+	}
+	
+	return deleteFolderItem(extractFile(parentFolder, name));
+
+}
+
+// Accessing
 
 folder* getFolder(folder* currentFolder, char* path){
 	if(*path=='\0'){
@@ -51,45 +87,6 @@ folder* getFolder(folder* currentFolder, char* path){
 	folder* pathedFolder = (folder *) getData(idOfPath);
 
 	return pathedFolder;
-}
-
-// Methods
-
-void printFileSystem(folder* currentFolder){
-	fileList* list = currentFolder->fileLinkedList;
-
-	while(list != NULL){
-		printf("%s ", list->file.fileName);
-		if(getType(list->file.inodeIndex)==DIRECTORY){
-			printf("has ---\n");
-			printFileSystem((folder*)getData(list->file.inodeIndex));
-			printf("---\n");
-		} else {
-			printf("\n");
-		}
-		
-		list = list->nextFile;
-	}
-}
-
-char removeFile(folder* currentFolder, char* path, char* name){
-	folder* parentFolder = getFolder(currentFolder, path);
-	if(parentFolder==NULL){
-		return 0;
-	}
-	
-	return deleteFolderItem(extractFile(parentFolder, name));
-
-
-}
-
-folder readFolderFile(int folderID){
-	folder* fold = (folder*) getData(folderID);
-	return *fold;
-}
-
-char* readTextFile(int textfileID){
-	return (char*) getData(textfileID);
 }
 
 int accessFile(folder* currentFolder, char* path){
@@ -147,6 +144,32 @@ int accessFile(folder* currentFolder, char* path){
     return -1;
 
 }
+
+// File System View
+
+void printFileSystemRecursive(folder* currentFolder, int spaces){
+	fileList* list = currentFolder->fileLinkedList;
+
+	while(list != NULL){
+		for(int i = 0 ; i < spaces ; i++){
+			printf("   ");
+		}
+		printf("%s\n", list->file.fileName);
+		if(getType(list->file.inodeIndex)==DIRECTORY){
+
+			printFileSystemRecursive((folder*)getData(list->file.inodeIndex), spaces+1);
+
+		}
+		
+		list = list->nextFile;
+	}
+}
+
+void printFileSystem(folder* currentFolder){
+	printFileSystemRecursive(currentFolder, 0);	
+}
+
+// Creating Files
 
 char addDataFile(folder* currentFolder, char* path, char* name, void* data, int size){
 	folder* pathedFolder = getFolder(currentFolder, path);	

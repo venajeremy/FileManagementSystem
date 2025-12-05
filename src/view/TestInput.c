@@ -9,8 +9,9 @@
 int main(){
 	// Constructors
 	initTable();
-
-	folder* root = (folder*) malloc(sizeof(folder));
+	filesys_folder_t root;
+	
+	initFolder(&root);
 
 	if(addFolderFile(root, "", "test")){
 		printf("Successfully created folder on root\n");
@@ -36,5 +37,6 @@ int main(){
 	printFileSystem(root);
 
 	// Destructors
+	deleteFolder(root);
 	destTable();
 }

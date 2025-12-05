@@ -10,7 +10,7 @@ const int MAXSIZE = 50;
 int size = 0;
 
 
-// Constructors & Destructors (MOVE TO CONTROLLER)
+// Constructors & Destructors
 
 void initTable(){
 	table.entryArray = (inodeEntry *)malloc(sizeof(inodeEntry)*MAXSIZE);
@@ -82,7 +82,7 @@ int addFile(void* dataPtr, int dataSize, fileType dataType){
 
 }
 
-int deleteFile(int index){
+int deleteInodeEntry(int index){
 
 	// Check index within bounds
 	if(index >= MAXSIZE || index < 0){

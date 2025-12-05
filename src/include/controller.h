@@ -7,18 +7,22 @@
 #include "folder.h"
 #include "inode.h"
 
-void printFileSystem(folder* currentFolder);
+char addDataFile(folder* currentFolder, char* path, char* name, void* data, int size);
 
-char removeFile(folder* currentFolder, char* path, char* name);
+char addFolderFile(folder* currentFolder, char* path, char* name);
+
+folder* getFolder(folder* currentFolder, char* path);
+
+int accessFile(folder* currentFolder, char* path);
 
 folder readFolderFile(int folderID);
 
 char* readTextFile(int textfileID);
 
-int accessFile(folder* currentFolder, char* path);
+char deleteFile(folder* currentFolder, char* path, char* name);
 
-char addDataFile(folder* currentFolder, char* path, char* name, void* data, int size);
+char deleteFolder(folder* delFolder);
 
-char addFolderFile(folder* currentFolder, char* path, char* name);
+void printFileSystem(folder* currentFolder);
 
 #endif

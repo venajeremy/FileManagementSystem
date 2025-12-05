@@ -5,7 +5,7 @@
 #include "folder.h"
 #include "inode.h"
 
-folder* initFolder();
+void initFolder(folder** newFolder);
 
 void createFile(folder* sourceFolder, char* name, int inodeID);
 

@@ -10,7 +10,7 @@ void destTable();
 
 int addFile(void* dataPtr, int dataSize, fileType dataType);
 
-int deleteFile(int index);
+int deleteInodeEntry(int index);
 
 void* getData(int index);
 

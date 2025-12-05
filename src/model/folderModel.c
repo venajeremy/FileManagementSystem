@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// Constructor & Destructor (MOVE TO CONTROLLER)
-folder* initFolder(){
-	folder* newFolder = (folder*) malloc(sizeof(folder));
-	newFolder->fileLinkedList = NULL;
-	return newFolder;
+// Constructor & Destructor
+
+void initFolder(folder** newFolder){
+	(*newFolder) = (folder*) malloc(sizeof(folder));
+	(*newFolder)->fileLinkedList = NULL;
 }
 
 // Methods
