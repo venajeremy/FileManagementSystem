@@ -7,6 +7,10 @@
 #include "folder.h"
 #include "inode.h"
 
+void initFileSystem(folder** fold);
+
+void destFileSystem(folder** fold);
+
 char addDataFile(folder* currentFolder, char* path, char* name, void* data, int size);
 
 char addFolderFile(folder* currentFolder, char* path, char* name);

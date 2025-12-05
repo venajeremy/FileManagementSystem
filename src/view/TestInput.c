@@ -8,15 +8,20 @@
 
 int main(){
 	// Constructors
-	initTable();
 	filesys_folder_t root;
 	
-	initFolder(&root);
+	initFileSystem(&root);
 
 	if(addFolderFile(root, "", "test")){
 		printf("Successfully created folder on root\n");
 	} else {
 		printf("Could not create folder on root\n");
+	}
+
+	if(addFolderFile(root, "", "test")){
+		printf("Error: Created duplicate test folders\n");
+	} else {
+		printf("Correct: Could not create folder on root\n");
 	}
 
 	addFolderFile(root, "test", "foo");
@@ -36,7 +41,26 @@ int main(){
 
 	printFileSystem(root);
 
+
+
+	printf("Adding folder words\n");
+
+	addFolderFile(root, "", "words");
+
+	printFileSystem(root);
+
+	printf("Adding text file to words\n");
+
+	addDataFile(root, "words", "textfile2", heapData, sizeof(heapData));
+
+	printFileSystem(root);
+
+	printf("Deleting folder foo\n");
+
+	deleteFile(root, "test", "foo");
+
+	printFileSystem(root);
+
 	// Destructors
-	deleteFolder(root);
-	destTable();
+	destFileSystem(&root);
 }

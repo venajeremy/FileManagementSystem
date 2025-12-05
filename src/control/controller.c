@@ -5,6 +5,18 @@
 
 // Folder Controls:
 
+// Constructor and Destructor
+
+void initFileSystem(folder** fold){
+	initTable();
+	initFolder(fold);
+}
+
+void destFileSystem(folder** fold){
+	deleteFolder(*fold);
+	destTable();
+}
+
 // Read Inode Helpers
 
 folder readFolderFile(int folderID){
@@ -173,7 +185,7 @@ void printFileSystem(folder* currentFolder){
 
 char addDataFile(folder* currentFolder, char* path, char* name, void* data, int size){
 	folder* pathedFolder = getFolder(currentFolder, path);	
-	if(pathedFolder==NULL){
+	if(pathedFolder==NULL || (accessFile(pathedFolder, name)>=0)){
 		return 0;
 	}
 
@@ -186,7 +198,7 @@ char addDataFile(folder* currentFolder, char* path, char* name, void* data, int 
 
 char addFolderFile(folder* currentFolder, char* path, char* name){
 	folder* pathedFolder = getFolder(currentFolder, path);	
-	if(pathedFolder==NULL){
+	if(pathedFolder==NULL || (accessFile(pathedFolder, name)>=0)){
 		return 0;
 	}
 

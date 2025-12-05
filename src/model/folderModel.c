@@ -44,10 +44,10 @@ fileList* extractFile(folder* currentFolder, char* name){
 		fileName = file.fileName;
 		searchName = name;
 
-		while(*fileName == *searchName || (*fileName == '\0' && *searchName == '/')){
-			if(*fileName == '\0'){
+		while(*fileName == *searchName || (*searchName == '\0' && *fileName == '/')){
+			if(*searchName == '\0'){
 				// At end of fileName and at the end of searchName, Remove item from linked list
-				(*previousItem)->nextFile = listItem->nextFile;
+				(*previousItem) = listItem->nextFile;
 				return listItem;
 			} 
 			fileName++;
