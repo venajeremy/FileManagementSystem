@@ -1,4 +1,5 @@
-#include "inodeTable.h"
+#include "inodeModel.h"
+#include "folderModel.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +9,7 @@ int main(){
 	// Constructors
 	initTable();
 
-
+	// Test Inode Table addFile and deleteFile
 	char* str = "Hello file system!\n";
 	char* heapData = (char*)malloc(sizeof(char)*strlen(str)+1);
 	strcpy(heapData, str);
@@ -29,6 +30,29 @@ int main(){
 	
 	printf("Saved string #%d, Reaing saved data: \n %s\n", testStringIndex, (char*) getData(testStringIndex));
   
+
+	// Test creating folder and accessing it
+	folder* root = initFolder();
+	folder* innerFolder = initFolder();
+	int folder = addFile(&innerFolder, sizeof(innerFolder), DIRECTORY);
+
+	createFile(root, "TestA", folder);
+
+	printf("Added new file!\n");
+
+	if(accessFile(root, "TestA") > 0){
+		printf("Successfully found: TestA\n");
+	} else {
+		printf("Could not find: TestA\n");
+	}
+	
+	if(accessFile(root, "TestB") > 0){
+		printf("Successfully found: TestB\n");
+	} else {
+		printf("Could not find: TestB\n");
+	}
+
+	
 
 	// Destructors
 	destTable();

@@ -2,14 +2,16 @@
 
 #define FOLDER_H
 
+#define fileNameSize 255
+
 typedef struct {
-	char* fileName;
-	int innodeIndex;
+	char fileName[fileNameSize];
+	int inodeIndex;
 } fileEntry;
 
 typedef struct fileList {
-	fileEntry* file;
-	fileList* nextFile;
+	fileEntry file;
+	struct fileList* nextFile;
 } fileList;
 
 typedef struct {

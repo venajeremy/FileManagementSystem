@@ -70,9 +70,9 @@
 		- Create file: Adds file to entry to folder
 			> Input: Source folder (folder memory address), file name, file inode id
 			> Output: Successfully created file (bool)
-		- Delete file: Removes file with specified name. If the file is a folder call get data (inode model method), then call delete file (folder model method) recursively on each file inside. If data file, call inode table delete file, then remove from linked list.
+		- Remove file: pulls a file with specified name from linked list and returns it
 			> Input: Source folder (folder memory address), file name
-			> Output: Successfully remove file (bool)
+			> Output: FileListItem/NULL
 
 ## Controllers
 
@@ -97,5 +97,7 @@
 		- Remove file: Takes in path and remove the file with folder model delete file
 			> Input: Path to file (string), Name of file (string)
 			> Output: Success (bool)
+        - Delete data file:
+        - Delete folder file:
 
 

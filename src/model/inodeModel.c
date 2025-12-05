@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "inodeTable.h"
+#include "inodeModel.h"
 
 inodeTable table;
 
@@ -10,7 +10,7 @@ const int MAXSIZE = 50;
 int size = 0;
 
 
-// Constructors & Destructors
+// Constructors & Destructors (MOVE TO CONTROLLER)
 
 void initTable(){
 	table.entryArray = (inodeEntry *)malloc(sizeof(inodeEntry)*MAXSIZE);

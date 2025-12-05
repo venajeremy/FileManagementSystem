@@ -1,6 +1,6 @@
-#ifndef INODETABLE_H
+#ifndef INODEMODEL_H
 
-#define INODETABLE_H
+#define INODEMODEL_H
 
 #include "inode.h"
 
