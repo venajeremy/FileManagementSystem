@@ -2,6 +2,8 @@
 
 #define CONTROLLER_H
 
+#include "inodeModel.h"
+#include "folderModel.h"
 #include "folder.h"
 #include "inode.h"
 

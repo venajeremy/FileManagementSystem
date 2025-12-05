@@ -7,10 +7,8 @@
 
 folder* initFolder();
 
-void destFolder(folder* fold);
+void createFile(folder* sourceFolder, char* name, int inodeID);
 
-int accessFile(folder* currentFolder, char* name);
-
-char createFile(folder* sourceFolder, char* name, int inodeID);
+fileList* extractFile(folder* currentFolder, char* name);
 
 #endif

@@ -1,20 +1,23 @@
 #include "controller.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+
 // Helper Methods
 
 char deleteFolderItem(fileList* listItem){
 	// Handles freeing a folder item including its children if it is a folder type
 	
 	if(listItem==NULL){
-		return -1;
+		return 0;
 	}
 
 	// Check if type is directory
 	fileEntry file = listItem->file;
 	if(getType(file.inodeIndex)==DIRECTORY){
 		// If directory load the folder object attached
-		folder* folder = (folder*) getData(file.inodeIndex);
-		fileList* innerListItem = folder->fileLinkedList;
+		folder* fold = (folder*) getData(file.inodeIndex);
+		fileList* innerListItem = fold->fileLinkedList;
 		fileList* next;
 		while(innerListItem != NULL){
 			// Recursively call delete folder item on all contents of the folder
@@ -31,7 +34,10 @@ char deleteFolderItem(fileList* listItem){
 	return 1;
 }
 
-folder* getFolder(currentFolder, path){
+folder* getFolder(folder* currentFolder, char* path){
+	if(*path=='\0'){
+		return currentFolder;
+	}
 	int idOfPath = accessFile(currentFolder, path);
 	if(idOfPath < 0){
 		printf("Error: Provided path does not lead to a valid file.\n");
@@ -52,10 +58,10 @@ folder* getFolder(currentFolder, path){
 char removeFile(folder* currentFolder, char* path, char* name){
 	folder* parentFolder = getFolder(currentFolder, path);
 	if(parentFolder==NULL){
-		return -1;
+		return 0;
 	}
 	
-	deleteFolderItem(removeFile(parentFolder, name));
+	return deleteFolderItem(extractFile(parentFolder, name));
 
 
 }
@@ -78,46 +84,46 @@ int accessFile(folder* currentFolder, char* path){
     // if reach / character and at end of file name and file is a folder recursively call on found folder. Otherwise continue to next file. If we reach end of file linked list return -1.
 
     fileList* currentFile = currentFolder->fileLinkedList;
-    fileEntry* currentEntry;
+    fileEntry currentEntry;
     char* fileChar;
     char* pathChar;
 
     while(currentFile != NULL){
         currentEntry = currentFile->file;
-        if(currentEntry != NULL){       // Current entry should never be NULL, this is extra precaution
-            fileChar = currentEntry->fileName;
-            pathChar = path;
+        
+		fileChar = currentEntry.fileName;
+		pathChar = path;
 
-            // Match characters in path name to file name
-            while(*fileChar == *pathChar || *fileChar=='\0'){
-                if(*fileChar == '\0'){
-                    // Reached end of current file name
-                    if(*pathChar == '/'){
-                        // Reached end of current path & path item is folder
-                        // If current file is a folder recursively search inside it
-                        if(getType(currentEntry->inodeIndex) == DIRECTORY){
-                            // Go to next character in path: start of next entry
-                            thChar++;
-                            return accessFile((folder*)getData(currentEntry->inodeIndex), pathChar);
-                        }
-                    } else if(*pathChar == '\0'){
-                        // Reached end of current path & path item is a file
-                        // Return inode index of file
-                        return currentEntry->inodeIndex;
-                    }
+		// Match characters in path name to file name
+		while(*fileChar == *pathChar || *fileChar=='\0'){
+			if(*fileChar == '\0'){
+				// Reached end of current file name
+				if(*pathChar == '/'){
+					// Reached end of current path & path item is folder
+					// If current file is a folder recursively search inside it
+					if(getType(currentEntry.inodeIndex) == DIRECTORY){
+						// Go to next character in path: start of next entry
+						pathChar++;
+						return accessFile((folder*)getData(currentEntry.inodeIndex), pathChar);
+					}
+				} else if(*pathChar == '\0'){
+					// Reached end of current path & path item is a file
+					// Return inode index of file
+					return currentEntry.inodeIndex;
+				}
 
-                    // Reached end of current file but not end of current path, break to next file in folder
-                    break;
+				// Reached end of current file but not end of current path, break to next file in folder
+				break;
 
-                }
-                // Not yet at end of filename, iterate to next character
-                fileChar++;
-                pathChar++;
-            }
+			}
+			// Not yet at end of filename, iterate to next character
+			fileChar++;
+			pathChar++;
+		}
 
-            // Current file name didn't match with path, try the next file in folder
-            currentFile = currentFile->nextFile;
-        }
+		// Current file name didn't match with path, try the next file in folder
+		currentFile = currentFile->nextFile;
+        
     }
 
     // Could not find file return -1
@@ -126,27 +132,31 @@ int accessFile(folder* currentFolder, char* path){
 }
 
 char addDataFile(folder* currentFolder, char* path, char* name, void* data, int size){
-	pathedFolder = getFolder(currentFolder, path);	
+	folder* pathedFolder = getFolder(currentFolder, path);	
 	if(pathedFolder==NULL){
-		return -1;
+		return 0;
 	}
 
 	int idOfDataFile = addFile(data, size, DATA);
 
-	return createFile(pathedFolder, name, idOfDataFile);
+	createFile(pathedFolder, name, idOfDataFile);
+
+	return 1;
 }
 
 char addFolderFile(folder* currentFolder, char* path, char* name){
-	pathedFolder = getFolder(currentFolder, path);	
-	if(pathedFoldeer==NULL){
-		return -1;
+	folder* pathedFolder = getFolder(currentFolder, path);	
+	if(pathedFolder==NULL){
+		return 0;
 	}
 
 	folder* newFolder = (folder *) malloc(sizeof(folder));
 
 	int idOfFolder = addFile(newFolder, sizeof(folder), DIRECTORY);
 
-	return createFile(pathedFolder, name, idOfFolder);
+	createFile(pathedFolder, name, idOfFolder);
+
+	return 1;
 }
 
 

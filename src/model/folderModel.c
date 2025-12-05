@@ -12,7 +12,7 @@ folder* initFolder(){
 
 // Methods
 
-char createFile(folder* sourceFolder, char* name, int inodeID){
+void createFile(folder* sourceFolder, char* name, int inodeID){
 
 	fileList* newEntry = (fileList*) malloc(sizeof(fileList));
 
@@ -29,7 +29,7 @@ char createFile(folder* sourceFolder, char* name, int inodeID){
 	sourceFolder->fileLinkedList = newEntry;
 }
 
-fileList* removeFile(folder* currentFolder, char* name){
+fileList* extractFile(folder* currentFolder, char* name){
 	fileList* listItem = currentFolder->fileLinkedList;
 	fileList** previousItem = &(currentFolder->fileLinkedList);
 	fileEntry file;

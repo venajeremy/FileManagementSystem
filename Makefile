@@ -7,7 +7,7 @@ INCL = src/include/
 SRCS = $(wildcard src/structures/*.c \
 	   src/model/*.c \
 	   src/view/*.c \
-	   src/controller/*.c)
+	   src/control/*.c)
 
 OBJ = $(SRCS:.c=.o)
 
