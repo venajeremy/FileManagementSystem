@@ -87,7 +87,7 @@ char deleteFile(folder* currentFolder, char* path, char* name){
 // Accessing
 
 folder* getFolder(folder* currentFolder, char* path){
-	if(*path=='\0'){
+	if(*path=='\0' || *path=='/'){
 		return currentFolder;
 	}
 	int idOfPath = accessFile(currentFolder, path);
