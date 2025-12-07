@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(){
+/*int main(){
 	// Constructors
 	filesys_folder_t root;
 	
@@ -71,6 +71,12 @@ int main(){
 
 	printf("textfile2 after update %s\n", readTextFile(accessFile(root, "words/textfile2")));	
 
+	printf("Deleting textfile2\n");
+
+	deleteFile(root, "words", "textfile2");
+
+	printFileSystem(root);
+
 	// Destructors
 	destFileSystem(&root);
-}
+}*/
